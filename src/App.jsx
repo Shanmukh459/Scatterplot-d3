@@ -3,6 +3,7 @@ import { scaleLinear, extent } from "d3"
 import { useData } from "./useData"
 import { AxisBottom } from "./AxisBottom"
 import { AxisLeft } from "./AxisLeft"
+import { Marks } from "./Marks"
 
 const height = 500
 const width = 960
@@ -14,11 +15,17 @@ const margin = {
   left: 100
 }
 
+const xAxisLabelOffset = 25
+const yAxisLabelOffset = 45
+
 function App() {
   const data = useData()
 
   const xValue = (d) => d.sepal_length
+  const xAxisLabel = 'Sepal Length'
+
   const yValue = (d) => d.sepal_width
+  const yAxisLabel = 'Sepal Width'
 
   const innerHeight = height - margin.top - margin.bottom
   const innerWidth = width - margin.left - margin.right
@@ -39,16 +46,14 @@ function App() {
     <svg width={width} height={height}>
       <g transform={`translate(${margin.left}, ${margin.top})`}>
         <AxisBottom xScale={xScale} innerHeight={innerHeight} />
-        <AxisLeft yScale={yScale} innerWidth={innerHeight} />
-        {
-          data.map(d => (
-            <circle 
-              cx={xScale(xValue(d))}
-              cy={yScale(yValue(d))}
-              r={5}
-            ></circle>
-          ))
-        }
+        <text 
+          x={innerWidth / 2}
+          textAnchor="middle"
+          y={innerHeight + xAxisLabelOffset}
+        >{xAxisLabel}</text>
+        <AxisLeft yScale={yScale} innerWidth={innerWidth} />
+        <text>{yAxisLabel}</text>
+        <Marks data={data} xScale={xScale} yScale={yScale} xValue={xValue} yValue={yValue} />
       </g>
     </svg>
   )
