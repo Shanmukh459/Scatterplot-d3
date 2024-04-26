@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react"
 import { scaleLinear, extent } from "d3"
 import { useData } from "./useData"
 import { AxisBottom } from "./AxisBottom"
+import { AxisLeft } from "./AxisLeft"
 
 const height = 500
 const width = 960
@@ -38,19 +39,7 @@ function App() {
     <svg width={width} height={height}>
       <g transform={`translate(${margin.left}, ${margin.top})`}>
         <AxisBottom xScale={xScale} innerHeight={innerHeight} />
-        {yScale.ticks().map(tickValue => (
-          <g transform={`translate(0, ${yScale(tickValue)})`}>
-            <line 
-              x2={innerWidth}
-              stroke="black"
-            />
-            <text 
-              style={{textAnchor: 'middle'}} 
-              x={-3}
-              dy='0.32em'
-            >{tickValue}</text>
-          </g>
-        ))}
+        <AxisLeft yScale={yScale} innerWidth={innerHeight} />
         {
           data.map(d => (
             <circle 
