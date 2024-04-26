@@ -1,11 +1,12 @@
-import { useEffect, useState } from 'react'
-import { csv } from 'd3';
+import { useEffect, useState } from "react";
+import { csv } from "d3";
 
-const csvUrl = "https://gist.githubusercontent.com/Shanmukh459/b5d83c8b7334616ceb7d9bfba7ffeb24/raw/c2a883e845ddae11c612c03823ee403e1f4d12ed/Iris.csv"
+const csvUrl =
+  "https://gist.githubusercontent.com/Shanmukh459/b5d83c8b7334616ceb7d9bfba7ffeb24/raw/c2a883e845ddae11c612c03823ee403e1f4d12ed/Iris.csv";
 
 export const useData = () => {
-
-  const [data, setData] = useState(null)
+  const [data, setData] = useState(null);
+  
   useEffect(() => {
     const row = (d) => {
       d.sepal_width = +d.sepal_width;
@@ -16,5 +17,5 @@ export const useData = () => {
     };
     csv(csvUrl, row).then(setData);
   }, []);
-  return data
+  return data;
 };

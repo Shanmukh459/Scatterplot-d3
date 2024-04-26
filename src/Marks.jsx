@@ -1,8 +1,18 @@
-export const Marks = ({ data, xScale,yScale, xValue, yValue }) => 
-data.map(d => (
-  <circle 
-    cx={xScale(xValue(d))}
-    cy={yScale(yValue(d))}
-    r={5}
-  ></circle>
-))
+export const Marks = ({
+  data,
+  xScale,
+  yScale,
+  xValue,
+  yValue,
+  tooltipFormat,
+}) =>
+  data.map((d) => (
+    <circle
+      className="mark"
+      cx={xScale(xValue(d))}
+      cy={yScale(yValue(d))}
+      r={7}
+    >
+      <title>{tooltipFormat(xValue(d))}</title>
+    </circle>
+  ));
