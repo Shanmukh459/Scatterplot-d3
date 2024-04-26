@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react"
-import { csv, scaleLinear, extent, min, max } from "d3"
-
-
-const csvUrl = "https://gist.githubusercontent.com/Shanmukh459/b5d83c8b7334616ceb7d9bfba7ffeb24/raw/c2a883e845ddae11c612c03823ee403e1f4d12ed/Iris.csv"
+import { scaleLinear, extent } from "d3"
+import { useData } from "./useData"
 
 const height = 500
 const width = 960
@@ -15,24 +13,13 @@ const margin = {
 }
 
 function App() {
-  const [data, setData] = useState(null)
-
+  const data = useData()
+  
   const xValue = (d) => d.sepal_length
   const yValue = (d) => d.sepal_width
 
   const innerHeight = height - margin.top - margin.bottom
   const innerWidth = width - margin.left - margin.right
-
-  useEffect(() => {
-    const row = (d) => {
-      d.sepal_width = +d.sepal_width
-      d.petal_width = +d.petal_width
-      d.sepal_length = +d.sepal_length
-      d.petal_length = +d.petal_length
-      return d
-    }
-    csv(csvUrl, row).then(setData)
-  }, [])
 
   if(!data) {
     return <pre>Loading...</pre>
@@ -45,8 +32,6 @@ function App() {
   const yScale = scaleLinear()
     .domain(extent(data, yValue))
     .range([0, height])
-
-  console.log(data[0])
 
   return (
     <svg width={width} height={height}>
