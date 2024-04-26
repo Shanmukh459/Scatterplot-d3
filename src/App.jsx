@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { scaleLinear, extent } from "d3"
 import { useData } from "./useData"
+import { AxisBottom } from "./AxisBottom"
 
 const height = 500
 const width = 960
@@ -14,7 +15,7 @@ const margin = {
 
 function App() {
   const data = useData()
-  
+
   const xValue = (d) => d.sepal_length
   const yValue = (d) => d.sepal_width
 
@@ -36,19 +37,7 @@ function App() {
   return (
     <svg width={width} height={height}>
       <g transform={`translate(${margin.left}, ${margin.top})`}>
-        {xScale.ticks().map(tickValue => (
-          <g transform={`translate(${xScale(tickValue)}, 0)`}>
-            <line 
-              y2={innerHeight}
-              stroke="black"
-            />
-            <text 
-              style={{textAnchor: 'middle'}} 
-              y={innerHeight+3}
-              dy='0.71em'
-            >{tickValue}</text>
-          </g>
-        ))}
+        <AxisBottom xScale={xScale} innerHeight={innerHeight} />
         {yScale.ticks().map(tickValue => (
           <g transform={`translate(0, ${yScale(tickValue)})`}>
             <line 
